@@ -6,6 +6,20 @@ sudo apt-get update && sudo apt-get ugrade -y
 # set autoupdating
 sudo apt install unattended-upgrades
 
+sudo bash -c " echo $' \
+Unattended-Upgrade::Automatic-Reboot "true";\n \
+Unattended-Upgrade::Automatic-Reboot-Time "02:00";\n \
+' \
+>> /etc/apt/apt.conf.d/50unattended-upgrades"
+
+sudo bash -c " echo $' \
+APT::Periodic::Update-Package-Lists \"1\";\n \
+APT::Periodic::Download-Upgradeable-Packages \"1\";\n \
+APT::Periodic::AutocleanInterval \"7\";\n \
+APT::Periodic::Unattended-Upgrade \"1\";\n \
+' \
+> /etc/apt/apt.conf.d/10periodic"
+
 sudo dpkg-reconfigure unattended-upgrades
 # you may want to reboot at this point
 sudo apt-get -y install \
