@@ -26,8 +26,8 @@ sudo apt-get -y install docker-ce
 
 sudo usermod -a -G docker $USER
 
-sudo bash -c "echo overlay >> /etc/modprobe"
-sudo bash -c "echo xt_ipvs >> /etc/modprobe"
+sudo bash -c "echo overlay >> /etc/modules"
+sudo bash -c "echo xt_ipvs >> /etc/modules"
 
 # load as we don't want to reboot
 sudo modprobe overlay
@@ -119,19 +119,8 @@ docker run -d \
         -p 53:53/tcp \
         -v /var/run/docker.sock:/var/run/docker.sock -v sessions:/app/pwd/ \
         --restart always \
-        franela/play-with-docker:latest ./play-with-docker --name pwd --cname host1 --save ./pwd/sessions
+        franela/play-with-docker:latest ./play-with-docker --name pwd --save ./pwd/sessions --cname host1 
 
-export GOPATH=~/.go
-
-
-
-git clone https://github.com/play-with-docker/play-with-docker
-cd play-with-docker
-go get -v -d -t ./...
-
-sudo apt-get install docker-compose -y
-
-docker-compose up
 
 
 
